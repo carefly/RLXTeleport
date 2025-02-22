@@ -1,4 +1,4 @@
-# RXL Warp
+# RLX Warp
 
 A mod for warp to a specific location
 
