@@ -36,4 +36,4 @@ lip install github.com/carefly/RLXWarp
 
 - **/warpop reload**
   
-  reload the config
+  reload the warp file
