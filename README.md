@@ -1,4 +1,4 @@
-# RXL Warp
+# RLX Warp
 
 A mod for warp to a specific location
 
@@ -36,4 +36,4 @@ lip install github.com/carefly/RLXWarp
 
 - **/warpop reload**
   
-  reload the config
+  reload the warp file
