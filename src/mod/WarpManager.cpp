@@ -10,12 +10,11 @@ using namespace rlx_warp;
 const std::string WARP_FILE_NAME = "warp.json";
 
 void WarpManager::init() {
-    std::ifstream file(WARP_FILE_NAME);
+    std::ifstream file(getFilePath());
     if (!file.is_open()) {
-        std::ofstream newFile(WARP_FILE_NAME);
+        std::ofstream newFile(getFilePath());
         newFile.close();
     }
-    load();
 }
 
 const std::vector<Warp>& WarpManager::getWarps() const { return warps; }
@@ -61,31 +60,57 @@ int WarpManager::getWarpCount() const { return (int)warps.size(); }
 
 void WarpManager::save() {
     nlohmann::json j(warps);
-    std::ofstream  file(WARP_FILE_NAME);
+    std::ofstream  file(getFilePath());
     file << j.dump(4);
     file.close();
 }
 
-bool WarpManager::load() {
-    std::ifstream file(WARP_FILE_NAME);
-    if (file.is_open()) {
-        nlohmann::json j;
-        try {
-            file >> j;
-            warps = j.get<std::vector<Warp>>();
-        } catch (const std::exception& e) {
-            std::cerr << "Error reading or parsing warp.json: " << e.what() << std::endl;
-            warps.clear();
-            file.close();
-            isLoaded = false;
-            return false;
-        }
-        file.close();
-        isLoaded = true;
-        return true;
-    } else {
-        std::cerr << "Could not open warp.json file." << std::endl;
+WarpManager::WarpResult WarpManager::load(std::string& error_msg) {
+    std::ifstream file(getFilePath());
+    if (!file.is_open()) {
+        error_msg = "Could not open warp.json file";
+        isLoaded  = false;
+        return WarpResult::LoadFailed;
+    }
+
+    // 检查文件是否为空
+    file.seekg(0, std::ios::end);
+    if (file.tellg() == 0) {
+        warps.clear();
+        isLoaded  = true;
+        error_msg = "";
+        return WarpResult::Success;
+    }
+    file.seekg(0, std::ios::beg);
+
+    nlohmann::json j = nlohmann::json::parse(file, nullptr, false);
+    if (j.is_discarded()) {
+        error_msg = "Invalid JSON format in warp.json";
+        warps.clear();
         isLoaded = false;
-        return false;
+        return WarpResult::LoadFailed;
+    }
+
+    if (!j.is_array() && !j.is_null()) {
+        error_msg = "Invalid warp.json format: root must be an array";
+        warps.clear();
+        isLoaded = false;
+        return WarpResult::LoadFailed;
+    }
+
+    try {
+        warps     = j.is_null() ? std::vector<Warp>{} : j.get<std::vector<Warp>>();
+        isLoaded  = true;
+        error_msg = "";
+        return WarpResult::Success;
+    } catch (const std::exception& e) {
+        error_msg = std::string("Error parsing warp data: ") + e.what();
+        warps.clear();
+        isLoaded = false;
+        return WarpResult::LoadFailed;
     }
 }
+
+void WarpManager::setDir(const std::string& d) { this->dir = d; }
+
+std::string WarpManager::getFilePath() const { return dir + WARP_FILE_NAME; }

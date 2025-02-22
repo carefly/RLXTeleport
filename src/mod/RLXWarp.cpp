@@ -14,24 +14,27 @@ RLXWarp& RLXWarp::getInstance() {
 }
 
 bool RLXWarp::load() {
-    getSelf().getLogger().debug("Loading warps");
+    WarpManager::getInstance().setDir(getSelf().getModDir().string() + "/");
     WarpManager::getInstance().init();
-    getSelf().getLogger().debug("{} warps loaded", WarpManager::getInstance().getWarpCount());
-
-    getSelf().getLogger().debug("Load success");
+    std::string error_msg;
+    if (WarpManager::WarpResult::Success == WarpManager::getInstance().load(error_msg)) {
+        getSelf().getLogger().info("{} warps loaded", WarpManager::getInstance().getWarpCount());
+    } else {
+        getSelf().getLogger().error("Failed to load warps, error: {}", error_msg);
+    }
     return true;
 }
 
 bool RLXWarp::enable() {
-    getSelf().getLogger().debug("registerCommands");
+
     WarpCommand::getInstance().registerCommands();
-    getSelf().getLogger().debug("Commands registered");
+    getSelf().getLogger().info("Commands registered");
 
     return true;
 }
 
 bool RLXWarp::disable() {
-    getSelf().getLogger().debug("can not disable");
+    getSelf().getLogger().info("can not disable");
 
     return true;
 }

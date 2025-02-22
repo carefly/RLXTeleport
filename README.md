@@ -1,35 +1,39 @@
-# LeviLamina Mod Template
+# RXL Warp
 
-A LeviLamina mod template
+A mod for warp to a specific location
 
-This mod is a template for developing LeviLamina mods.
+This mod is based on LeviLamina
+
+RLX Server Utility Plugin
 
 ## Install
 
-Generate a new repository from this template.
+lip install github.com/carefly/RLXWarp
 
 ## Usage
 
-Before using this mod template, make sure that you have installed XMake and a Minecraft Bedrock Server with LeviLamina.
+### for player:
 
-1. Clone the new repository into a local folder.
+- **/warp ls**
+  
+  list all warp
 
-1. Change the mod name and the expected LeviLamina version in `xmake.lua`.
+- **/warp <warp_name>**
+  
+  warp to a warp
 
-1. Add your code.
+---
 
-1. Run `xmake repo -u` in the root of the repository.
+### for op:
 
-1. Run `xmake` to build the mod.
+- **/warpop add**
+  
+  add a warp where you are
 
-Now the build is complete at `bin/`.
+- **/warpop del <warp_name>**
+  
+  delete a warp
 
-## Contributing
-
-Ask questions by creating an issue.
-
-PRs accepted.
-
-## License
-
-CC0-1.0 © LiteLDev
+- **/warpop reload**
+  
+  reload the config

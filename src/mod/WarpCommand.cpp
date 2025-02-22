@@ -17,12 +17,14 @@ struct WarpGoCommad {
     CommandRawText Name;
 };
 
-enum WarpOperation : int { add = 0, del = 1, reload = 2 };
+enum WarpOperation : int { add = 0, del = 1 };
 struct WarpOperationCommad {
     WarpOperation  Operation;
     CommandRawText Name;
     CommandRawText Description;
 };
+
+struct WarpReloadCommad {};
 
 
 void WarpCommand::registerCommands() {
@@ -42,7 +44,7 @@ void WarpCommand::registerCommands() {
                 output.success("§b====Warp 列表====");
                 auto& warps = WarpManager::getInstance().getWarps();
                 for (auto& warp : warps) {
-                    std::string warpInfo = warp.name + "  -  " + warp.description;
+                    std::string warpInfo = warp.name + "    " + warp.description;
                     output.success(warpInfo);
                 }
                 output.success("§b===========");
@@ -72,16 +74,16 @@ void WarpCommand::registerCommands() {
         .optional("Description")
         .execute(
             [&](CommandOrigin const& ori, CommandOutput& output, WarpOperationCommad const& param, Command const&) {
+                if ((int)ori.getPermissionsLevel() < 1) return;
+
                 Actor*      actor = ori.getEntity();
                 Warp        wp;
                 std::string warp = param.Name.getText();
 
-                if ((int)ori.getPermissionsLevel() < 1) return;
-
                 switch (param.Operation) {
                 case WarpOperation::add: {
                     auto pos       = actor->getPosition();
-                    pos.y          = pos.y - 2;
+                    pos.y          = float(int(pos.y - 1));
                     wp.name        = warp;
                     wp.d           = actor->getDimensionId();
                     wp.x           = pos.x;
@@ -110,18 +112,23 @@ void WarpCommand::registerCommands() {
                     }
                     break;
                 }
-                case WarpOperation::reload: {
-                    auto result = WarpManager::getInstance().load();
-                    if (result) {
-                        output.success("成功加载warp点, 当前有 {} 个warp点", WarpManager::getInstance().getWarpCount());
-                    } else {
-                        output.error("未能正确加载warp.json文件，请检查文件是否正确");
-                    }
-                    break;
-                }
                 default:
                     break;
                 }
             }
         );
+
+    warpOperationCommand.overload<WarpReloadCommad>().text("reload").execute(
+        [&](CommandOrigin const& ori, CommandOutput& output, WarpReloadCommad const&, Command const&) {
+            if ((int)ori.getPermissionsLevel() < 1) return;
+
+            std::string error_msg;
+            auto        result = WarpManager::getInstance().load(error_msg);
+            if (WarpManager::WarpResult::Success == result) {
+                output.success("成功加载warp点, 当前有 {} 个warp点", WarpManager::getInstance().getWarpCount());
+            } else {
+                output.error("未能正确加载warp.json文件，请检查文件是否正确，错误信息：" + error_msg);
+            }
+        }
+    );
 }

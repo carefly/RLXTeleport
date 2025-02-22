@@ -26,7 +26,8 @@ public:
     WarpResult               addWarp(const Warp& warp);
     WarpResult               delWarp(const std::string& name);
     int                      getWarpCount() const;
-    bool                     load();
+    WarpResult               load(std::string& error_msg);
+    void                     setDir(const std::string& dir);
 
 private:
     WarpManager() = default;
@@ -37,6 +38,8 @@ private:
     std::vector<Warp> warps;
     void              save();
     bool              isLoaded = false;
+    std::string       dir      = "";
+    std::string       getFilePath() const;
 };
 
 } // namespace rlx_warp
