@@ -38,7 +38,7 @@ void WarpCommand::registerCommands() {
                 return;
             }
             auto* sp       = static_cast<Player*>(entity);
-            auto  warpName = param.Name.getText();
+            auto  warpName = param.Name.mText;
 
             if ("ls" == warpName) {
                 output.success("§b====Warp 列表====");
@@ -78,7 +78,7 @@ void WarpCommand::registerCommands() {
 
                 Actor*      actor = ori.getEntity();
                 Warp        wp;
-                std::string warp = param.Name.getText();
+                std::string warp = param.Name.mText;
 
                 switch (param.Operation) {
                 case WarpOperation::add: {
@@ -89,7 +89,7 @@ void WarpCommand::registerCommands() {
                     wp.x           = pos.x;
                     wp.y           = pos.y;
                     wp.z           = pos.z;
-                    wp.description = param.Description.getText();
+                    wp.description = param.Description.mText;
 
                     auto result = WarpManager::getInstance().addWarp(wp);
                     if (WarpManager::WarpResult::Success == result) {
