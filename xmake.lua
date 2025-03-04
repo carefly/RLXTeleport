@@ -23,7 +23,7 @@ option("target_type")
     set_values("server", "client")
 option_end()
 
-target("RLXWarp") -- Change this to your mod name.
+target("RLXTeleport") -- Change this to your mod name.
     add_rules("@levibuildscript/linkrule")
     add_rules("@levibuildscript/modpacker")
     add_cxflags( "/EHa", "/utf-8", "/W4", "/w44265", "/w44289", "/w44296", "/w45263", "/w44738", "/w45204")
@@ -33,9 +33,9 @@ target("RLXWarp") -- Change this to your mod name.
     set_kind("shared")
     set_languages("c++20")
     set_symbols("debug")
-    add_headerfiles("src/**.h")
+    add_headerfiles("include/**.h")
     add_files("src/**.cpp")
-    add_includedirs("src")
+    add_includedirs("include")
     -- if is_config("target_type", "server") then
     --     add_includedirs("src-server")
     --     add_files("src-server/**.cpp")

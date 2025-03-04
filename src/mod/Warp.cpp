@@ -2,7 +2,7 @@
 #include <nlohmann/json.hpp>
 
 
-namespace rlx_warp {
+namespace rlx_teleport {
 
 void to_json(nlohmann::json& j, const Warp& w) {
     j = nlohmann::json{
@@ -24,4 +24,4 @@ void from_json(const nlohmann::json& j, Warp& w) {
     w.description = j["description"].get<std::string>();
 }
 
-} // namespace rlx_warp
+} // namespace rlx_teleport

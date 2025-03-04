@@ -2,14 +2,14 @@
 
 #include "ll/api/mod/NativeMod.h"
 
-namespace rlx_warp {
+namespace rlx_teleport {
 
-class RLXWarp {
+class RLXTeleport {
 
 public:
-    static RLXWarp& getInstance();
+    static RLXTeleport& getInstance();
 
-    RLXWarp() : mSelf(*ll::mod::NativeMod::current()) {}
+    RLXTeleport() : mSelf(*ll::mod::NativeMod::current()) {}
 
     [[nodiscard]] ll::mod::NativeMod& getSelf() const { return mSelf; }
 
@@ -30,4 +30,4 @@ private:
     ll::mod::NativeMod& mSelf;
 };
 
-} // namespace rlx_warp
+} // namespace rlx_teleport

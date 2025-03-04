@@ -2,7 +2,7 @@
 #include <string>
 
 
-namespace rlx_warp {
+namespace rlx_teleport {
 
 struct Warp {
     std::string name;
@@ -16,4 +16,4 @@ struct Warp {
 void to_json(nlohmann::json& j, const Warp& w);
 void from_json(const nlohmann::json& j, Warp& w);
 
-} // namespace rlx_warp
+} // namespace rlx_teleport

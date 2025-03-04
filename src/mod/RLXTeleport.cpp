@@ -1,19 +1,19 @@
-#include "mod/RLXWarp.h"
+#include "RLXTeleport.h"
 
-#include "WarpCommand.h"
 #include "WarpManager.h"
+#include "command/WarpCommand.h"
 #include "ll/api/mod/RegisterHelper.h"
 #include <ll/api/Config.h>
 
 
-using namespace rlx_warp;
+using namespace rlx_teleport;
 
-RLXWarp& RLXWarp::getInstance() {
-    static RLXWarp instance;
+RLXTeleport& RLXTeleport::getInstance() {
+    static RLXTeleport instance;
     return instance;
 }
 
-bool RLXWarp::load() {
+bool RLXTeleport::load() {
     WarpManager::getInstance().setDir(getSelf().getModDir().string() + "/");
     WarpManager::getInstance().init();
     std::string error_msg;
@@ -25,7 +25,7 @@ bool RLXWarp::load() {
     return true;
 }
 
-bool RLXWarp::enable() {
+bool RLXTeleport::enable() {
 
     WarpCommand::getInstance().registerCommands();
     getSelf().getLogger().info("Commands registered");
@@ -33,10 +33,10 @@ bool RLXWarp::enable() {
     return true;
 }
 
-bool RLXWarp::disable() {
+bool RLXTeleport::disable() {
     getSelf().getLogger().info("can not disable");
 
     return true;
 }
 
-LL_REGISTER_MOD(rlx_warp::RLXWarp, rlx_warp::RLXWarp::getInstance());
+LL_REGISTER_MOD(rlx_teleport::RLXTeleport, rlx_teleport::RLXTeleport::getInstance());

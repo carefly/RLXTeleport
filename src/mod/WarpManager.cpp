@@ -5,7 +5,7 @@
 #include <vector>
 
 
-using namespace rlx_warp;
+using namespace rlx_teleport;
 
 const std::string WARP_FILE_NAME = "warp.json";
 

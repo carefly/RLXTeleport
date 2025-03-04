@@ -3,7 +3,7 @@
 #include <vector>
 
 
-namespace rlx_warp {
+namespace rlx_teleport {
 
 class WarpManager {
 
@@ -42,4 +42,4 @@ private:
     std::string       getFilePath() const;
 };
 
-} // namespace rlx_warp
+} // namespace rlx_teleport

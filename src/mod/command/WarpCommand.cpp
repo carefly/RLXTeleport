@@ -1,4 +1,4 @@
-#include "WarpCommand.h"
+#include "command/WarpCommand.h"
 #include "WarpManager.h"
 
 #include <ll/api/command/Command.h>
@@ -10,7 +10,7 @@
 #include <mc/world/actor/player/Player.h>
 
 
-using namespace rlx_warp;
+using namespace rlx_teleport;
 
 struct WarpLsCommad {};
 struct WarpGoCommad {

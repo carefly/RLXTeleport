@@ -1,6 +1,6 @@
 #pragma once
 
-namespace rlx_warp {
+namespace rlx_teleport {
 
 class WarpCommand {
 public:
@@ -18,4 +18,4 @@ private:
     WarpCommand& operator=(const WarpCommand&) = delete;
 };
 
-} // namespace rlx_warp
+} // namespace rlx_teleport
