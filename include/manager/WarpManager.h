@@ -1,9 +1,18 @@
 #pragma once
-#include "Warp.h"
+#include <string>
 #include <vector>
 
 
 namespace rlx_teleport {
+
+struct Warp {
+    std::string name;
+    float       x;
+    float       y;
+    float       z;
+    int         d;
+    std::string description;
+};
 
 class WarpManager {
 
