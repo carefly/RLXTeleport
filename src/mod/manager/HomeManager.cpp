@@ -11,10 +11,9 @@
 using namespace rlx_teleport;
 
 const std::string HOME_FILE_PATH_NAME = "homes";
-const int         HOME_DEFAULT_LIMIT  = 16;
 
 void HomeManager::init() {
-    mDir = HOME_FILE_PATH_NAME;
+    mDir       = HOME_FILE_PATH_NAME;
     mHomeLimit = ConfigManager::getInstance().getHomeLimit();
 
     // 检查目录是否存在，如果不存在则创建

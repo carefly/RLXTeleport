@@ -74,7 +74,10 @@ void HomeCommand::registerCommands() {
                 std::string name = param.Name.mText;
 
                 if (HomeCommandOperation::add == param.Operation) {
-                    auto home = HomeManager::HomePoint{name, sp->getPosition(), sp->getDimensionId()};
+                    auto pos = sp->getPosition();
+                    pos.y    = float(int(pos.y - 1));
+
+                    auto home = HomeManager::HomePoint{name, pos, sp->getDimensionId()};
                     auto hp   = HomeManager::getInstance().addHome(home, sp->getXuid(), sp->getNameTag());
                     if (hp == HomeManager::HomeResult::LimitExceeded) {
                         output.error("家的数量不能超过 " + std::to_string(HomeManager::getInstance().getHomeLimit()));
@@ -103,7 +106,6 @@ void HomeCommand::registerCommands() {
                     auto homes = HomeManager::getInstance().getHomes(sp->getXuid());
                     for (HomeManager::HomePoint mhp : homes) {
                         if (mhp.name == name) {
-                            mhp.pos.y = mhp.pos.y + 0.6f;
                             sp->teleport(mhp.pos, mhp.d);
                             output.success("§b 成功传送到家 " + mhp.name);
                             return;
