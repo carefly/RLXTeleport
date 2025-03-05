@@ -7,9 +7,7 @@ using namespace rlx_teleport;
 
 const std::string CONFIG_FILE_NAME = "config.json";
 
-void ConfigManager::init() {
-    mDir = "";
-}
+void ConfigManager::init() { mDir = ""; }
 
 void ConfigManager::loadConfig() {
     std::string configPath = getConfigFilePath();
@@ -18,7 +16,8 @@ void ConfigManager::loadConfig() {
     if (!std::filesystem::exists(configFile)) {
 
         nlohmann::json defaultConfig;
-        defaultConfig["home_limit"] = mHomeLimit;
+        defaultConfig["home_limit"]  = mHomeLimit;
+        defaultConfig["tpa_timeout"] = mTpaTimeOut;
 
         std::filesystem::path dir = configFile.parent_path();
         if (!dir.empty() && !std::filesystem::exists(dir)) {
@@ -41,11 +40,33 @@ void ConfigManager::loadConfig() {
             nlohmann::json config;
             file >> config;
 
+            bool configUpdated = false;
+
             if (config.contains("home_limit")) {
                 mHomeLimit = config["home_limit"].get<int>();
+            } else {
+                config["home_limit"] = mHomeLimit;
+                configUpdated        = true;
+            }
+
+            if (config.contains("tpa_timeout")) {
+                mTpaTimeOut = config["tpa_timeout"].get<int>();
+            } else {
+                config["tpa_timeout"] = mTpaTimeOut;
+                configUpdated         = true;
             }
 
             file.close();
+
+            // 如果配置文件有更新，则写回文件
+            if (configUpdated) {
+                std::ofstream outFile(configPath);
+                if (outFile.is_open()) {
+                    outFile << config.dump(4);
+                    outFile.close();
+                }
+            }
+
             mIsLoaded = true;
         }
     } catch (const std::exception&) {
@@ -53,11 +74,8 @@ void ConfigManager::loadConfig() {
     }
 }
 
-int ConfigManager::getHomeLimit() const { return mHomeLimit; }
 
-void ConfigManager::setDir(const std::string& dir) {
-    mDir = dir;
-}
+void ConfigManager::setDir(const std::string& dir) { mDir = dir; }
 
 std::string ConfigManager::getConfigFilePath() const {
     if (mDir.empty()) {
@@ -65,3 +83,7 @@ std::string ConfigManager::getConfigFilePath() const {
     }
     return mDir + "/" + CONFIG_FILE_NAME;
 }
+
+int ConfigManager::getTpaTimeOut() const { return mTpaTimeOut; }
+
+int ConfigManager::getHomeLimit() const { return mHomeLimit; }

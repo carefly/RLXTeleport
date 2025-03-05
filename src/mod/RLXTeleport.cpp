@@ -1,6 +1,7 @@
 #include "RLXTeleport.h"
 
 #include "command/HomeCommand.h"
+#include "command/TpaCommand.h"
 #include "command/WarpCommand.h"
 #include "manager/ConfigManager.h"
 #include "manager/HomeManager.h"
@@ -46,6 +47,7 @@ bool RLXTeleport::enable() {
 
     WarpCommand::getInstance().registerCommands();
     HomeCommand::getInstance().registerCommands();
+    TpaCommand::getInstance().registerCommands();
     getSelf().getLogger().info("Commands registered");
 
     return true;

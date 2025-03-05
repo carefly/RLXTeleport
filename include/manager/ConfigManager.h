@@ -12,8 +12,10 @@ public:
 
     void init();
     void loadConfig();
-    int getHomeLimit() const;
     void setDir(const std::string& dir);
+
+    int getHomeLimit() const;
+    int getTpaTimeOut() const;
 
 private:
     ConfigManager() = default;
@@ -21,10 +23,13 @@ private:
     ConfigManager(const ConfigManager&)            = delete;
     ConfigManager& operator=(const ConfigManager&) = delete;
 
-    
-    int mHomeLimit = 16; 
+
+    int mHomeLimit  = 16;
+    int mTpaTimeOut = 60;
+
     std::string mDir = "";
     std::string getConfigFilePath() const;
+
     bool mIsLoaded = false;
 };
 
