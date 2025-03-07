@@ -1,8 +1,12 @@
 #include "manager/HomeManager.h"
+#include "common/utils.h"
 #include "manager/ConfigManager.h"
+
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
+#include <ll/api/event/EventBus.h>
+#include <ll/api/event/player/PlayerDieEvent.h>
 #include <nlohmann/json.hpp>
 #include <optional>
 #include <vector>
@@ -21,6 +25,20 @@ void HomeManager::init() {
     if (!std::filesystem::exists(dir)) {
         std::filesystem::create_directories(dir);
     }
+}
+
+void HomeManager::initHooks() {
+    auto& eventBus = ll::event::EventBus::getInstance();
+
+    auto PlayerDieEventListener =
+        eventBus.emplaceListener<ll::event::player::PlayerDieEvent>([](ll::event::player::PlayerDieEvent& event) {
+            auto& player = event.self();
+
+            auto xuid = player.getXuid();
+            auto pos  = Utils::fixPos(player.getPosition());
+            auto d    = (int)player.getDimensionId();
+            HomeManager::getInstance().updateDeathPoint(xuid, pos, d);
+        });
 }
 
 const std::vector<HomeManager::HomePoint>& HomeManager::getHomes(std::string xuid) const {
@@ -195,6 +213,8 @@ std::string HomeManager::getFileFullPath(std::string filename) const { return mD
 void HomeManager::updateDeathPoint(const std::string& xuid, const Vec3& pos, int d) {
     mDeathPoints[xuid] = DeathPoint{pos, d};
 }
+
+void HomeManager::clearDeathPoint(const std::string& xuid) { mDeathPoints.erase(xuid); }
 
 std::optional<HomeManager::DeathPoint> HomeManager::getDeathPoint(const std::string& xuid) const {
     auto it = mDeathPoints.find(xuid);

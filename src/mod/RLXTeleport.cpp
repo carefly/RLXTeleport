@@ -48,6 +48,8 @@ bool RLXTeleport::enable() {
     WarpCommand::getInstance().registerCommands();
     HomeCommand::getInstance().registerCommands();
     TpaCommand::getInstance().registerCommands();
+
+    HomeManager::getInstance().initHooks();
     getSelf().getLogger().info("Commands registered");
 
     return true;

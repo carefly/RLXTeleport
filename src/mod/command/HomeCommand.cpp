@@ -1,4 +1,5 @@
 #include "command/HomeCommand.h"
+#include "common/utils.h"
 #include "manager/HomeManager.h"
 #include <ll/api/command/Command.h>
 #include <ll/api/command/CommandHandle.h>
@@ -54,6 +55,7 @@ void HomeCommand::registerCommands() {
             auto it = HomeManager::getInstance().getDeathPoint(sp->getXuid());
             if (!it) output.error("没到找死亡点");
             else sp->teleport(it->pos, it->d);
+            HomeManager::getInstance().clearDeathPoint(sp->getXuid());
         }
     );
 
@@ -75,7 +77,7 @@ void HomeCommand::registerCommands() {
 
                 if (HomeCommandOperation::add == param.Operation) {
                     auto pos = sp->getPosition();
-                    pos.y    = float(int(pos.y - 1));
+                    pos      = Utils::fixPos(pos);
 
                     auto home = HomeManager::HomePoint{name, pos, sp->getDimensionId()};
                     auto hp   = HomeManager::getInstance().addHome(home, sp->getXuid(), sp->getNameTag());

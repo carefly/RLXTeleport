@@ -1,6 +1,6 @@
 #include "command/WarpCommand.h"
+#include "common/utils.h"
 #include "manager/WarpManager.h"
-
 #include <ll/api/command/Command.h>
 #include <ll/api/command/CommandHandle.h>
 #include <ll/api/command/CommandRegistrar.h>
@@ -83,7 +83,7 @@ void WarpCommand::registerCommands() {
                 switch (param.Operation) {
                 case WarpOperation::add: {
                     auto pos       = actor->getPosition();
-                    pos.y          = float(int(pos.y - 1));
+                    pos            = Utils::fixPos(pos);
                     wp.name        = warp;
                     wp.d           = actor->getDimensionId();
                     wp.x           = pos.x;

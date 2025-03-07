@@ -35,7 +35,9 @@ public:
         return instance;
     }
 
-    void                          init();
+    void init();
+    void initHooks();
+
     const std::vector<HomePoint>& getHomes(std::string xuid) const;
     HomeResult addHome(const HomePoint& home, const std::string& xuid, const std::string& player_name);
     HomeResult delHome(const std::string& name, const std::string& xuid, const std::string& player_name);
@@ -45,8 +47,8 @@ public:
     HomeResult load(std::string& error_msg);
     void       setDir(const std::string& dir);
 
-    void                      updateDeathPoint(const std::string& xuid, const Vec3& pos, int d);
     std::optional<DeathPoint> getDeathPoint(const std::string& xuid) const;
+    void                      clearDeathPoint(const std::string& xuid);
 
 private:
     HomeManager() = default;
@@ -63,6 +65,8 @@ private:
     std::string mDir       = "";
     std::string getFileFullPath(std::string filename) const;
     std::string getXuidFromFilename(const std::string& filename) const;
+
+    void updateDeathPoint(const std::string& xuid, const Vec3& pos, int d);
 };
 
 } // namespace rlx_teleport
