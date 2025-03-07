@@ -78,8 +78,8 @@ lip install github.com/carefly/RLXTeleport
 
 ```json
 {
-    "home_limit": 16, // 家数量限制
-    "tpa_timeout": 60 // 传送请求超时时间
+    "home_limit": 16, # 家数量限制
+    "tpa_timeout": 60 # 传送请求超时时间
 }
 ```
 
@@ -92,12 +92,12 @@ lip install github.com/carefly/RLXTeleport
 ```json
 [
     {
-        "d": 0, // 维度
-        "description": "this is warp1", // 描述
-        "name": "warp1", // 名称
-        "x": 917.0, // x坐标
-        "y": 67.0, // y坐标
-        "z": 1788.0 // z坐标
+        "d": 0, 
+        "description": "this is warp1", 
+        "name": "warp1", 
+        "x": 917.0, 
+        "y": 67.0, 
+        "z": 1788.0 
     },
     {
         "d": 0,
@@ -121,13 +121,13 @@ lip install github.com/carefly/RLXTeleport
 ```json
 [
     {
-        "name": "home1", // 家的名称
+        "name": "home1", 
         "pos": {
-            "x": 156.0, // x坐标
-            "y": 78.0, // y坐标
-            "z": 156.0 // z坐标
+            "x": 156.0, 
+            "y": 78.0, 
+            "z": 156.0 
         },
-        "d": 0 // 维度
+        "d": 0 
     },
     {
         "name": "home2",
