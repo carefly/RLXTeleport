@@ -55,7 +55,7 @@ void HomeCommand::registerCommands() {
             auto it = HomeManager::getInstance().getDeathPoint(sp->getXuid());
             if (!it) output.error("没到找死亡点");
             else sp->teleport(it->pos, it->d);
-            HomeManager::getInstance().clearDeathPoint(sp->getXuid());
+            // HomeManager::getInstance().clearDeathPoint(sp->getXuid());
         }
     );
 
