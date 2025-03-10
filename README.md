@@ -72,7 +72,7 @@ lip install github.com/carefly/RLXTeleport
 
 插件里面不包含配置文件，启动游戏后会自动生成配置文件
 
-配置文件路径：plugins/RLXTeleport/config.json
+配置文件路径：plugins/RLXModeResources/cofig/config.json
 
 配置文件示例：
 
@@ -86,7 +86,7 @@ lip install github.com/carefly/RLXTeleport
 ### 数据文件说明
 
 - warp：传送点数据
-  - 数据文件路径：plugins/RLXTeleport/warp.json
+  - 数据文件路径：plugins/RLXModeResources/data/warps/warp.json
   - 数据文件示例：
 
 ```
@@ -111,10 +111,10 @@ lip install github.com/carefly/RLXTeleport
 ```
 
 - home：家配置
-  - 数据文件路径：plugins/RLXTeleport/homes/
+  - 数据文件路径：plugins/RLXModeResources/data/homes/
   - 数据文件说明：
   
-    在plugins/RLXTeleport/homes/ 目录下，每个玩家一个文件，文件名为 **xuid - name.json**，插件根据xuid识别玩家，name为玩家的nameTag，仅为展示，方便管理员管理文件
+    在plugins/RLXModeResources/data/homes/ 目录下，每个玩家一个文件，文件名为 **xuid - name.json**，插件根据xuid识别玩家，name为玩家的nameTag，仅为展示，方便管理员管理文件
 
   - 数据文件示例：
 
