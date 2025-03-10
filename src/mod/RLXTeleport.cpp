@@ -19,13 +19,14 @@ RLXTeleport& RLXTeleport::getInstance() {
 }
 
 bool RLXTeleport::load() {
-    ConfigManager::getInstance().init();
-    WarpManager::getInstance().init();
-    HomeManager::getInstance().init();
 
-    ConfigManager::getInstance().setDir(getSelf().getModDir().string() + "/");
-    WarpManager::getInstance().setDir(getSelf().getModDir().string() + "/");
-    HomeManager::getInstance().setDir(getSelf().getModDir().string() + "/");
+
+    auto dir = getSelf().getModDir().string() + "/../RLXModeResources";
+    getSelf().getLogger().info("dir: {}", dir);
+
+    ConfigManager::getInstance().setDir(dir + "/config/");
+    WarpManager::getInstance().setDir(dir + "/data/");
+    HomeManager::getInstance().setDir(dir + "/data/");
 
     ConfigManager::getInstance().loadConfig();
 

@@ -29,7 +29,6 @@ public:
         return instance;
     }
 
-    void                     init();
     const std::vector<Warp>& getWarps() const;
     Warp*                    getWarp(const std::string& name);
     WarpResult               addWarp(const Warp& warp);
@@ -47,7 +46,7 @@ private:
     std::vector<Warp> warps;
     void              save();
     bool              isLoaded = false;
-    std::string       dir      = "";
+    std::string       mDir     = "";
     std::string       getFilePath() const;
 };
 

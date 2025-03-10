@@ -1,8 +1,10 @@
 #include "manager/WarpManager.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <vector>
+
 
 namespace rlx_teleport {
 
@@ -33,14 +35,6 @@ void from_json(const nlohmann::json& j, Warp& w) {
 using namespace rlx_teleport;
 
 const std::string WARP_FILE_NAME = "warp.json";
-
-void WarpManager::init() {
-    std::ifstream file(getFilePath());
-    if (!file.is_open()) {
-        std::ofstream newFile(getFilePath());
-        newFile.close();
-    }
-}
 
 const std::vector<Warp>& WarpManager::getWarps() const { return warps; }
 
@@ -91,14 +85,27 @@ void WarpManager::save() {
 }
 
 WarpManager::WarpResult WarpManager::load(std::string& error_msg) {
-    std::ifstream file(getFilePath());
+
+    std::filesystem::path filePath = getFilePath();
+    std::filesystem::path dirPath  = filePath.parent_path();
+
+    if (!std::filesystem::exists(dirPath)) {
+        std::filesystem::create_directories(dirPath);
+    }
+
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        std::ofstream newFile(filePath);
+        newFile.close();
+        file = std::ifstream(filePath);
+    }
+
     if (!file.is_open()) {
         error_msg = "Could not open warp.json file";
         isLoaded  = false;
         return WarpResult::LoadFailed;
     }
 
-    // 检查文件是否为空
     file.seekg(0, std::ios::end);
     if (file.tellg() == 0) {
         warps.clear();
@@ -136,6 +143,6 @@ WarpManager::WarpResult WarpManager::load(std::string& error_msg) {
     }
 }
 
-void WarpManager::setDir(const std::string& d) { this->dir = d; }
+void WarpManager::setDir(const std::string& d) { this->mDir = d + "/warps/"; }
 
-std::string WarpManager::getFilePath() const { return dir + WARP_FILE_NAME; }
+std::string WarpManager::getFilePath() const { return mDir + WARP_FILE_NAME; }

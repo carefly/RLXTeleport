@@ -7,8 +7,6 @@ using namespace rlx_teleport;
 
 const std::string CONFIG_FILE_NAME = "config.json";
 
-void ConfigManager::init() { mDir = ""; }
-
 void ConfigManager::loadConfig() {
     std::string configPath = getConfigFilePath();
 
@@ -40,32 +38,14 @@ void ConfigManager::loadConfig() {
             nlohmann::json config;
             file >> config;
 
-            bool configUpdated = false;
-
             if (config.contains("home_limit")) {
                 mHomeLimit = config["home_limit"].get<int>();
-            } else {
-                config["home_limit"] = mHomeLimit;
-                configUpdated        = true;
             }
-
             if (config.contains("tpa_timeout")) {
                 mTpaTimeOut = config["tpa_timeout"].get<int>();
-            } else {
-                config["tpa_timeout"] = mTpaTimeOut;
-                configUpdated         = true;
             }
 
             file.close();
-
-            // 如果配置文件有更新，则写回文件
-            if (configUpdated) {
-                std::ofstream outFile(configPath);
-                if (outFile.is_open()) {
-                    outFile << config.dump(4);
-                    outFile.close();
-                }
-            }
 
             mIsLoaded = true;
         }

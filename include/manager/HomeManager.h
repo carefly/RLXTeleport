@@ -35,7 +35,6 @@ public:
         return instance;
     }
 
-    void init();
     void initHooks();
 
     const std::vector<HomePoint>& getHomes(std::string xuid) const;

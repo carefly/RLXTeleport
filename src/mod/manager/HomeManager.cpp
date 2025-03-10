@@ -16,17 +16,6 @@ using namespace rlx_teleport;
 
 const std::string HOME_FILE_PATH_NAME = "homes";
 
-void HomeManager::init() {
-    mDir       = HOME_FILE_PATH_NAME;
-    mHomeLimit = ConfigManager::getInstance().getHomeLimit();
-
-    // 检查目录是否存在，如果不存在则创建
-    std::filesystem::path dir(mDir);
-    if (!std::filesystem::exists(dir)) {
-        std::filesystem::create_directories(dir);
-    }
-}
-
 void HomeManager::initHooks() {
     auto& eventBus = ll::event::EventBus::getInstance();
 
@@ -115,6 +104,8 @@ std::string HomeManager::getXuidFromFilename(const std::string& filename) const 
 }
 
 HomeManager::HomeResult HomeManager::load(std::string& error_msg) {
+
+    mHomeLimit = ConfigManager::getInstance().getHomeLimit();
     mHomes.clear();
 
     std::string dirPath = mDir;

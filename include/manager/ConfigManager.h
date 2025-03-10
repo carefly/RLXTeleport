@@ -10,7 +10,6 @@ public:
         return instance;
     }
 
-    void init();
     void loadConfig();
     void setDir(const std::string& dir);
 
