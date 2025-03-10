@@ -33,6 +33,7 @@ public:
     Warp*                    getWarp(const std::string& name);
     WarpResult               addWarp(const Warp& warp);
     WarpResult               delWarp(const std::string& name);
+    WarpResult               updateWarpDescription(const std::string& name, const std::string& description);
     int                      getWarpCount() const;
     WarpResult               load(std::string& error_msg);
     void                     setDir(const std::string& dir);

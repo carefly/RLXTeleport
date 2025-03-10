@@ -75,6 +75,17 @@ WarpManager::WarpResult WarpManager::delWarp(const std::string& name) {
     return WarpResult::NotFound;
 }
 
+WarpManager::WarpResult WarpManager::updateWarpDescription(const std::string& name, const std::string& description) {
+    for (auto& warp : warps) {
+        if (warp.name == name) {
+            warp.description = description;
+            save();
+            return WarpResult::Success;
+        }
+    }
+    return WarpResult::NotFound;
+}
+
 int WarpManager::getWarpCount() const { return (int)warps.size(); }
 
 void WarpManager::save() {

@@ -17,7 +17,7 @@ struct WarpGoCommad {
     CommandRawText Name;
 };
 
-enum WarpOperation : int { add = 0, del = 1 };
+enum WarpOperation : int { add = 0, del = 1, edit = 2 };
 struct WarpOperationCommad {
     WarpOperation  Operation;
     CommandRawText Name;
@@ -78,7 +78,10 @@ void WarpCommand::registerCommands() {
 
                 Actor*      actor = ori.getEntity();
                 Warp        wp;
-                std::string warp = param.Name.mText;
+                std::string warp        = param.Name.mText;
+                std::string description = param.Description.mText;
+
+                description.erase(std::remove(warp.begin(), warp.end(), '\"'), warp.end());
 
                 switch (param.Operation) {
                 case WarpOperation::add: {
@@ -89,7 +92,7 @@ void WarpCommand::registerCommands() {
                     wp.x           = pos.x;
                     wp.y           = pos.y;
                     wp.z           = pos.z;
-                    wp.description = param.Description.mText;
+                    wp.description = description;
 
                     auto result = WarpManager::getInstance().addWarp(wp);
                     if (WarpManager::WarpResult::Success == result) {
@@ -109,6 +112,15 @@ void WarpCommand::registerCommands() {
                         output.error("未能正确加载warp.json文件，请检查文件是否正确，执行 /warpop reload 重新加载");
                     } else {
                         output.error(format("没有warp点 {}, 无法删除", warp));
+                    }
+                    break;
+                }
+                case WarpOperation::edit: {
+                    auto result = WarpManager::getInstance().updateWarpDescription(warp, description);
+                    if (WarpManager::WarpResult::Success == result) {
+                        output.success(format("成功更新warp点 {}", warp));
+                    } else {
+                        output.error(format("没有warp点 {}, 无法更新", warp));
                     }
                     break;
                 }
