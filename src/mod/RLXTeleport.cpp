@@ -22,7 +22,6 @@ bool RLXTeleport::load() {
 
 
     auto dir = getSelf().getModDir().string() + "/../RLXModeResources";
-    getSelf().getLogger().info("dir: {}", dir);
 
     ConfigManager::getInstance().setDir(dir + "/config/");
     WarpManager::getInstance().setDir(dir + "/data/");

@@ -1,6 +1,7 @@
 #include "command/WarpCommand.h"
 #include "common/utils.h"
 #include "manager/WarpManager.h"
+#include <RLXTeleport.h>
 #include <ll/api/command/Command.h>
 #include <ll/api/command/CommandHandle.h>
 #include <ll/api/command/CommandRegistrar.h>
@@ -81,7 +82,7 @@ void WarpCommand::registerCommands() {
                 std::string warp        = param.Name.mText;
                 std::string description = param.Description.mText;
 
-                description.erase(std::remove(warp.begin(), warp.end(), '\"'), warp.end());
+                description.erase(std::remove(description.begin(), description.end(), '\"'), description.end());
 
                 switch (param.Operation) {
                 case WarpOperation::add: {

@@ -87,6 +87,7 @@ lip install github.com/carefly/RLXTeleport
 
 - warp：传送点数据
   - 数据文件路径：plugins/RLXModeResources/data/warps/warp.json
+  - 命令行里面description如果有空格，请用双引号，description里面不能使用双引号
   - 数据文件示例：
 
 ```
