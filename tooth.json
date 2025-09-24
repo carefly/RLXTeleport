@@ -11,7 +11,7 @@
             "type:mod"
         ]
     },
-    "asset_url": "https://github.com/carefly/RLXTeleport/releases/download/v1.1.4/RLXTeleport-windows-x64.zip",
+    "asset_url": "https://github.com/carefly/RLXTeleport/releases/download/v1.5.1/RLXTeleport-windows-x64.zip",
     "prerequisites": {
         "github.com/LiteLDev/LeviLamina": "1.5.1"
     },
