@@ -1,6 +1,7 @@
 #include "command/WarpCommand.h"
 #include "common/utils.h"
 #include "manager/WarpManager.h"
+#include "ui/WarpForm.h"
 #include <RLXTeleport.h>
 #include <ll/api/command/Command.h>
 #include <ll/api/command/CommandHandle.h>
@@ -17,6 +18,7 @@ struct WarpLsCommad {};
 struct WarpGoCommad {
     CommandRawText Name;
 };
+struct WarpCommad {};
 
 enum WarpOperation : int { add = 0, del = 1, edit = 2 };
 struct WarpOperationCommad {
@@ -64,6 +66,26 @@ void WarpCommand::registerCommands() {
     warpCommand.overload<WarpLsCommad>().text("ls").execute(
         [](CommandOrigin const&, CommandOutput&, WarpLsCommad const&, Command const&) {
 
+        }
+    );
+    warpCommand.overload<WarpCommad>().execute(
+        [](CommandOrigin const& origin, CommandOutput& output, WarpCommad const&, Command const&) {
+            auto* entity = origin.getEntity();
+            if (entity == nullptr || !entity->isType(ActorType::Player)) {
+                output.error("Only players can do");
+                return;
+            }
+            auto* sp = static_cast<Player*>(entity);
+            auto& warps = WarpManager::getInstance().getWarps();
+            if (warps.empty()) {
+                output.error("没有传送点");
+                return;
+            }
+            WarpForm::showWarps(*sp, warps, [](Player& player, const Warp& warp) {
+                Vec3 pos(warp.x, warp.y, warp.z);
+                player.teleport(pos, warp.d);
+                player.sendMessage("§b 成功传送到传送点 " + warp.name);
+            });
         }
     );
 

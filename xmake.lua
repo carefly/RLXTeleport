@@ -45,3 +45,8 @@ target("RLXTeleport") -- Change this to your mod name.
     --     add_includedirs("src-client")
     --     add_files("src-client/**.cpp")
     -- end
+
+-- Include local build configuration if exists (not tracked by git)
+if os.isfile("xmake.local.lua") then
+    includes("xmake.local.lua")
+end

@@ -5,6 +5,7 @@
 #include "command/WarpCommand.h"
 #include "manager/ConfigManager.h"
 #include "manager/HomeManager.h"
+#include "manager/TeleportMenuTrigger.h"
 #include "manager/WarpManager.h"
 
 #include <ll/api/Config.h>
@@ -50,6 +51,8 @@ bool RLXTeleport::enable() {
     TpaCommand::getInstance().registerCommands();
 
     HomeManager::getInstance().initHooks();
+    TeleportMenuTrigger::getInstance().initHooks();
+
     getSelf().getLogger().info("Commands registered");
 
     return true;

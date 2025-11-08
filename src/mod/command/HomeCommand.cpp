@@ -1,6 +1,7 @@
 #include "command/HomeCommand.h"
 #include "common/utils.h"
 #include "manager/HomeManager.h"
+#include "ui/HomeForm.h"
 #include <ll/api/command/Command.h>
 #include <ll/api/command/CommandHandle.h>
 #include <ll/api/command/CommandRegistrar.h>
@@ -15,6 +16,7 @@ using namespace rlx_teleport;
 
 struct SuicideCommand {};
 struct BackCommand {};
+struct HomeCommad {};
 
 enum HomeCommandOperation : int { add = 0, del = 1, go = 2 };
 struct HomeOperationCommand {
@@ -137,6 +139,25 @@ void HomeCommand::registerCommands() {
                 output.success(hp.name);
             }
             output.success("§b===========");
+        }
+    );
+    homeCommand.overload<HomeCommad>().execute(
+        [](CommandOrigin const& origin, CommandOutput& output, HomeCommad const&, Command const&) {
+            auto* entity = origin.getEntity();
+            if (entity == nullptr || !entity->isType(ActorType::Player)) {
+                output.error("Only players can do");
+                return;
+            }
+            auto* sp    = static_cast<Player*>(entity);
+            auto  homes = HomeManager::getInstance().getHomes(sp->getXuid());
+            if (homes.empty()) {
+                output.error("没有家");
+                return;
+            }
+            HomeForm::showHomes(*sp, homes, [](Player& player, const HomeManager::HomePoint& home) {
+                player.teleport(home.pos, home.d);
+                player.sendMessage("§b 成功传送到家 " + home.name);
+            });
         }
     );
 }

@@ -15,6 +15,7 @@ public:
 
     int getHomeLimit() const;
     int getTpaTimeOut() const;
+    std::string getTriggerItemKeyword() const;
 
 private:
     ConfigManager() = default;
@@ -25,6 +26,7 @@ private:
 
     int mHomeLimit  = 16;
     int mTpaTimeOut = 60;
+    std::string mTriggerItemKeyword = "sword";
 
     std::string mDir = "";
     std::string getConfigFilePath() const;

@@ -10,6 +10,7 @@ RLX Teleport 是RLX服务器的自用插件，用于传送玩家到指定位置�
 - Home 家传送点
 - Tpa 玩家之间的传送
 - 自杀和返回上一次死亡位置
+- 物品触发菜单（通过使用特定物品打开图形化传送菜单）
 
 ## 安装
 
@@ -32,22 +33,24 @@ lip install github.com/carefly/RLXTeleport
 
 #### warp 命令
   
-| 命令                            | 描述                                                                          | 权限     |
-| ------------------------------- | ----------------------------------------------------------------------------- | -------- |
-| warp [name]                     | 传送到[name]传送点                                                            | 普通玩家 |
-| warp ls                         | 列出所有传送点                                                                | 普通玩家 |
-| warpop add [name] [description] | 添加名称为[name]，描述为[description]的传送点<br>传送点的位置为管理员当前位置 | 管理员   |
-| warpop del [name]               | 删除名称为[name]的传送点                                                      | 管理员   |
-| warp reload                     | 重新加载warp文件                                                              | 管理员   |
+| 命令                             | 描述                                                                                                   | 权限     |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------ | -------- |
+| warp [name]                      | 传送到[name]传送点                                                                                     | 普通玩家 |
+| warp ls                          | 列出所有传送点                                                                                         | 普通玩家 |
+| warpop add [name] [description]  | 添加名称为[name]，描述为[description]的传送点<br>传送点的位置为管理员当前位置<br>description为可选参数 | 管理员   |
+| warpop del [name]                | 删除名称为[name]的传送点                                                                               | 管理员   |
+| warpop edit [name] [description] | 更新名称为[name]的传送点的描述为[description]                                                          | 管理员   |
+| warpop reload                    | 重新加载warp文件                                                                                       | 管理员   |
 
 #### home 命令
 
-| 命令           | 描述                                         | 权限     |
-| -------------- | -------------------------------------------- | -------- |
-| home go [name] | 传送到名称为[name]的家                       | 普通玩家 |
-| home ls        | 列出所有家                                   | 普通玩家 |
-| home add       | 添加名称为[name]的家，家的位置为玩家当前位置 | 普通玩家 |
-| home del       | 删除名称为[name]的家                         | 普通玩家 |
+| 命令            | 描述                                         | 权限     |
+| --------------- | -------------------------------------------- | -------- |
+| home            | 打开图形化菜单选择要传送的家                 | 普通玩家 |
+| home go [name]  | 传送到名称为[name]的家                       | 普通玩家 |
+| home ls         | 列出所有家                                   | 普通玩家 |
+| home add [name] | 添加名称为[name]的家，家的位置为玩家当前位置 | 普通玩家 |
+| home del [name] | 删除名称为[name]的家                         | 普通玩家 |
 
 
 #### tpa命令
@@ -61,6 +64,14 @@ lip install github.com/carefly/RLXTeleport
 | tpa cancel        | 取消自己的传送请求     | 普通玩家 |
 | tpa query         | 查询传送请求           | 普通玩家 |
 
+#### 物品触发菜单
+
+玩家可以通过使用特定物品来打开图形化传送菜单。默认情况下，物品名称包含 "sword" 关键词的物品会触发菜单（可在配置文件中修改 `trigger_item_keyword`）。
+
+使用触发物品后，会显示一个主菜单，包含以下选项：
+- **家 (Home)**：打开家列表表单，选择要传送的家
+- **传送点 (Warp)**：打开传送点列表表单，选择要传送的传送点
+
 #### 自杀和返回上一次死亡位置
 
 | 命令    | 描述               | 权限     |
@@ -72,14 +83,15 @@ lip install github.com/carefly/RLXTeleport
 
 插件里面不包含配置文件，启动游戏后会自动生成配置文件
 
-配置文件路径：plugins/RLXModeResources/cofig/config.json
+配置文件路径：plugins/RLXModeResources/config/config.json
 
 配置文件示例：
 
 ```
 {
     "home_limit": 16, // 家数量限制
-    "tpa_timeout": 60 // 传送请求超时时间
+    "tpa_timeout": 60, // 传送请求超时时间（秒）
+    "trigger_item_keyword": "sword" // 触发传送菜单的物品关键词（物品名称包含此关键词时，使用该物品会打开传送菜单）
 }
 ```
 

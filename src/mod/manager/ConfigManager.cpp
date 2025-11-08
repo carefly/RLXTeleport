@@ -16,6 +16,7 @@ void ConfigManager::loadConfig() {
         nlohmann::json defaultConfig;
         defaultConfig["home_limit"]  = mHomeLimit;
         defaultConfig["tpa_timeout"] = mTpaTimeOut;
+        defaultConfig["trigger_item_keyword"] = mTriggerItemKeyword;
 
         std::filesystem::path dir = configFile.parent_path();
         if (!dir.empty() && !std::filesystem::exists(dir)) {
@@ -44,6 +45,9 @@ void ConfigManager::loadConfig() {
             if (config.contains("tpa_timeout")) {
                 mTpaTimeOut = config["tpa_timeout"].get<int>();
             }
+            if (config.contains("trigger_item_keyword")) {
+                mTriggerItemKeyword = config["trigger_item_keyword"].get<std::string>();
+            }
 
             file.close();
 
@@ -67,3 +71,5 @@ std::string ConfigManager::getConfigFilePath() const {
 int ConfigManager::getTpaTimeOut() const { return mTpaTimeOut; }
 
 int ConfigManager::getHomeLimit() const { return mHomeLimit; }
+
+std::string ConfigManager::getTriggerItemKeyword() const { return mTriggerItemKeyword; }
