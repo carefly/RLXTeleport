@@ -109,7 +109,7 @@ void HomeCommand::registerCommands() {
                 } else if (HomeCommandOperation::go == param.Operation) {
                     auto homes = HomeManager::getInstance().getHomes(sp->getXuid());
                     for (HomeManager::HomePoint mhp : homes) {
-                        if (mhp.name == name) {
+                        if (Utils::equalsIgnoreCase(mhp.name, name)) {
                             sp->teleport(mhp.pos, mhp.d);
                             output.success("§b 成功传送到家 " + mhp.name);
                             return;

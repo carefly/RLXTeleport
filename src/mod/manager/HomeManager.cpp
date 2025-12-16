@@ -48,7 +48,7 @@ HomeManager::addHome(const HomePoint& home, const std::string& xuid, const std::
     }
 
     for (const auto& existingHome : mHomes[xuid]) {
-        if (existingHome.name == home.name) {
+        if (Utils::equalsIgnoreCase(existingHome.name, home.name)) {
             return HomeResult::Duplicate;
         }
     }
@@ -67,7 +67,7 @@ HomeManager::delHome(const std::string& name, const std::string& xuid, const std
 
     auto& homes = it->second;
     for (auto homeIt = homes.begin(); homeIt != homes.end(); ++homeIt) {
-        if (homeIt->name == name) {
+        if (Utils::equalsIgnoreCase(homeIt->name, name)) {
             homes.erase(homeIt);
             save(xuid, player_name);
             return HomeResult::Success;

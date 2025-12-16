@@ -1,4 +1,5 @@
 #include "manager/WarpManager.h"
+#include "common/utils.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -40,7 +41,7 @@ const std::vector<Warp>& WarpManager::getWarps() const { return warps; }
 
 Warp* WarpManager::getWarp(const std::string& name) {
     for (auto& warp : warps) {
-        if (warp.name == name) {
+        if (Utils::equalsIgnoreCase(warp.name, name)) {
             return &warp;
         }
     }
