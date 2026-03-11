@@ -33,7 +33,7 @@ struct TpaCommonCommand {
 
 void TpaCommand::registerCommands() {
     using ll::command::CommandRegistrar;
-    auto& tpaCommand = CommandRegistrar::getInstance().getOrCreateCommand("tpa", "传送到指定玩家");
+    auto& tpaCommand = CommandRegistrar::getInstance(false).getOrCreateCommand("tpa", "传送到指定玩家");
     tpaCommand.overload<TpaRequestCommand>()
         .required("Operation")
         .required("Player")

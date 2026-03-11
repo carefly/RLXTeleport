@@ -1,6 +1,6 @@
 #include "manager/HomeManager.h"
 #include "common/utils.h"
-#include "manager/ConfigManager.h"
+#include "manager/TeleportConfig.hpp"
 
 #include <cstdio>
 #include <filesystem>
@@ -105,7 +105,7 @@ std::string HomeManager::getXuidFromFilename(const std::string& filename) const 
 
 HomeManager::HomeResult HomeManager::load(std::string& error_msg) {
 
-    mHomeLimit = ConfigManager::getInstance().getHomeLimit();
+    mHomeLimit = Config().homeLimit;
     mHomes.clear();
 
     std::string dirPath = mDir;

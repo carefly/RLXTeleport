@@ -3,9 +3,9 @@
 #include "command/HomeCommand.h"
 #include "command/TpaCommand.h"
 #include "command/WarpCommand.h"
-#include "manager/ConfigManager.h"
 #include "manager/HomeManager.h"
 #include "manager/TeleportMenuTrigger.h"
+#include "manager/TeleportConfig.hpp"
 #include "manager/WarpManager.h"
 
 #include <ll/api/Config.h>
@@ -21,14 +21,19 @@ RLXTeleport& RLXTeleport::getInstance() {
 
 bool RLXTeleport::load() {
 
+    // 初始化配置单例
+    TeleportConfig::initWithName("RLXTeleport.json");
 
     auto dir = getSelf().getModDir().string() + "/../RLXModeResources";
 
-    ConfigManager::getInstance().setDir(dir + "/config/");
     WarpManager::getInstance().setDir(dir + "/data/");
     HomeManager::getInstance().setDir(dir + "/data/");
 
-    ConfigManager::getInstance().loadConfig();
+    getSelf().getLogger().info("Config loaded: homeLimit={}, tpaTimeout={}, triggerItemKeyword={}",
+        Config().homeLimit,
+        Config().tpaTimeout,
+        Config().triggerItemKeyword
+    );
 
     std::string error_msg;
     if (WarpManager::WarpResult::Success == WarpManager::getInstance().load(error_msg)) {

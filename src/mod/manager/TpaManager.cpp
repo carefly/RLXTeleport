@@ -1,5 +1,5 @@
 #include "manager/TpaManager.h"
-#include "manager/ConfigManager.h"
+#include "manager/TeleportConfig.hpp"
 
 using namespace rlx_teleport;
 
@@ -42,7 +42,7 @@ void TpaManager::cleanExpiredRequests() {
     while (it != tpaRequests.end()) {
         const auto& request  = it->second;
         auto        duration = std::chrono::duration_cast<std::chrono::seconds>(now - request.request_time).count();
-        if (duration >= ConfigManager::getInstance().getTpaTimeOut()) {
+        if (duration >= Config().tpaTimeout) {
             it = tpaRequests.erase(it);
         } else {
             ++it;

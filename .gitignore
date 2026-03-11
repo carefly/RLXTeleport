@@ -558,4 +558,5 @@ fabric.properties
 /.idea/
 /.vscode/
 /bin/
-xmake.local.lua
+make.ps1
+/.doc/

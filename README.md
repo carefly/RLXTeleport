@@ -90,9 +90,11 @@ lip install github.com/carefly/RLXTeleport
 
 ```
 {
-    "home_limit": 16, // 家数量限制
-    "tpa_timeout": 60, // 传送请求超时时间（秒）
-    "trigger_item_keyword": "sword" // 触发传送菜单的物品关键词（物品名称包含此关键词时，使用该物品会打开传送菜单）
+    "RLXTeleport": {
+        "homeLimit": 16, // 家数量限制
+        "tpaTimeout": 60, // 传送请求超时时间（秒）
+        "triggerItemKeyword": "sword" // 触发传送菜单的物品关键词（物品名称包含此关键词时，使用该物品会打开传送菜单）
+    }
 }
 ```
 

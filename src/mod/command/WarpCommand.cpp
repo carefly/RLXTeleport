@@ -32,7 +32,7 @@ struct WarpReloadCommad {};
 
 void WarpCommand::registerCommands() {
     using ll::command::CommandRegistrar;
-    auto& warpCommand = CommandRegistrar::getInstance().getOrCreateCommand("warp", "warp to a specific location");
+    auto& warpCommand = CommandRegistrar::getInstance(false).getOrCreateCommand("warp", "warp to a specific location");
     warpCommand.overload<WarpGoCommad>().required("Name").execute(
         [](CommandOrigin const& origin, CommandOutput& output, WarpGoCommad const& param, Command const&) {
             auto* entity = origin.getEntity();
@@ -75,7 +75,7 @@ void WarpCommand::registerCommands() {
                 output.error("Only players can do");
                 return;
             }
-            auto* sp = static_cast<Player*>(entity);
+            auto* sp    = static_cast<Player*>(entity);
             auto& warps = WarpManager::getInstance().getWarps();
             if (warps.empty()) {
                 output.error("没有传送点");
@@ -89,8 +89,8 @@ void WarpCommand::registerCommands() {
         }
     );
 
-    auto& warpOperationCommand =
-        CommandRegistrar::getInstance().getOrCreateCommand("warpop", "地标管理", CommandPermissionLevel::GameDirectors);
+    auto& warpOperationCommand = CommandRegistrar::getInstance(false)
+                                     .getOrCreateCommand("warpop", "地标管理", CommandPermissionLevel::GameDirectors);
     warpOperationCommand.overload<WarpOperationCommad>()
         .required("Operation")
         .required("Name")

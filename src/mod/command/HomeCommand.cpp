@@ -27,7 +27,7 @@ struct HomeLsCommad {};
 
 void HomeCommand::registerCommands() {
     using ll::command::CommandRegistrar;
-    auto& suicideCommand = CommandRegistrar::getInstance().getOrCreateCommand("suicide", "原地躺下");
+    auto& suicideCommand = CommandRegistrar::getInstance(false).getOrCreateCommand("suicide", "原地躺下");
     suicideCommand.overload<SuicideCommand>().execute(
         [](CommandOrigin const& origin, CommandOutput& output, SuicideCommand const&, Command const&) {
             auto* entity = origin.getEntity();
@@ -43,7 +43,7 @@ void HomeCommand::registerCommands() {
         }
     );
 
-    auto& backCommand = CommandRegistrar::getInstance().getOrCreateCommand("back", "返回上次挂掉的位置");
+    auto& backCommand = CommandRegistrar::getInstance(false).getOrCreateCommand("back", "返回上次挂掉的位置");
     backCommand.overload<SuicideCommand>().execute(
         [](CommandOrigin const& origin, CommandOutput& output, SuicideCommand const&, Command const&) {
             auto* entity = origin.getEntity();
@@ -61,7 +61,7 @@ void HomeCommand::registerCommands() {
         }
     );
 
-    auto& homeCommand = CommandRegistrar::getInstance().getOrCreateCommand("home", "家");
+    auto& homeCommand = CommandRegistrar::getInstance(false).getOrCreateCommand("home", "家");
     homeCommand.overload<HomeOperationCommand>()
         .required("Operation")
         .required("Name")

@@ -1,6 +1,6 @@
 #include "manager/TeleportMenuTrigger.h"
 
-#include "manager/ConfigManager.h"
+#include "manager/TeleportConfig.hpp"
 #include "manager/HomeManager.h"
 #include "manager/WarpManager.h"
 #include "ui/HomeForm.h"
@@ -41,8 +41,7 @@ bool TeleportMenuTrigger::isTriggerItem(const ItemStack& item) const {
     auto itemName = item.getTypeName();
 
     // 从配置文件获取触发物品关键词
-    auto&       configManager = ConfigManager::getInstance();
-    std::string keyword       = configManager.getTriggerItemKeyword();
+    std::string keyword = Config().triggerItemKeyword;
 
     // 转换为小写进行不区分大小写的匹配
     std::string itemNameLower = itemName;
