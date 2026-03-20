@@ -4,9 +4,10 @@
 #include "command/TpaCommand.h"
 #include "command/WarpCommand.h"
 #include "manager/HomeManager.h"
-#include "manager/TeleportMenuTrigger.h"
 #include "manager/TeleportConfig.hpp"
+#include "manager/TeleportMenuTrigger.h"
 #include "manager/WarpManager.h"
+
 
 #include <ll/api/Config.h>
 #include <ll/api/mod/RegisterHelper.h>
@@ -22,14 +23,15 @@ RLXTeleport& RLXTeleport::getInstance() {
 bool RLXTeleport::load() {
 
     // 初始化配置单例
-    TeleportConfig::initWithName("RLXTeleport.json");
+    TeleportConfig::initWithName("teleport_config.json");
 
     auto dir = getSelf().getModDir().string() + "/../RLXModeResources";
 
     WarpManager::getInstance().setDir(dir + "/data/");
     HomeManager::getInstance().setDir(dir + "/data/");
 
-    getSelf().getLogger().info("Config loaded: homeLimit={}, tpaTimeout={}, triggerItemKeyword={}",
+    getSelf().getLogger().info(
+        "Config loaded: homeLimit={}, tpaTimeout={}, triggerItemKeyword={}",
         Config().homeLimit,
         Config().tpaTimeout,
         Config().triggerItemKeyword
