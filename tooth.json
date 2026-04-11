@@ -13,7 +13,7 @@
     },
     "asset_url": "https://github.com/carefly/RLXTeleport/releases/download/v26.10.5/RLXTeleport-windows-x64.zip",
     "prerequisites": {
-        "github.com/LiteLDev/LeviLamina": "1.7.0"
+        "github.com/LiteLDev/LeviLamina": "26.10.5"
     },
     "files": {
         "place": [
